@@ -579,16 +579,20 @@ class LoadingZoneRow(tk.Frame):
         top = tk.Frame(self, bg=BG_COLOR)
         top.pack(anchor="w")
 
-        self.icon_label = tk.Label(top, image=self.icon_img, bg=BG_COLOR, cursor="hand2")
-        self.icon_label.pack(side="left")
-        self.icon_label.bind("<Button-1>", lambda e: self.open_icon_picker(self.icon_label))
-        self.icon_photo = self.icon_img
 
+        if self.num > 0:
+            self.icon_label = tk.Label(top, image=self.icon_img, bg=BG_COLOR, cursor="hand2")
+            self.icon_label.pack(side="left")
+            self.icon_label.bind("<Button-1>", lambda e: self.open_icon_picker(self.icon_label))
+            self.icon_photo = self.icon_img
+
+        # elif self.num > 1:
         if self.num > 1:
             self.icon_label2 = tk.Label(top, image=self.icon_img, bg=BG_COLOR, cursor="hand2")
             self.icon_label2.pack(side="left")
             self.icon_label2.bind("<Button-1>", lambda e: self.open_icon_picker(self.icon_label2))
             self.icon_photo2 = self.icon_img
+
 
         self.name_label = tk.Label(
             top,
@@ -607,27 +611,28 @@ class LoadingZoneRow(tk.Frame):
 
         self.name_label.bind("<Button-1>", self.toggle)
 
-        # Restore collapsed state
-        if self.state["collapsed"]:
-            self.name_label.config(fg="gray")
-            self.text.pack_forget()
-            self.icon_label.config(image=self.dark_icon)
+        if self.num >= 1:
+            # Restore collapsed state
+            if self.state["collapsed"]:
+                self.name_label.config(fg="gray")
+                self.text.pack_forget()
+                self.icon_label.config(image=self.dark_icon)
 
-        # Restore icon
-        icon_name = self.state.get("icon", "Moon.png")
-        icon_path = resource_path(f"assets/{icon_name}")
-        if os.path.exists(icon_path):
-            img = ImageTk.PhotoImage(resize_by_height(Image.open(icon_path), 18))
-            self.icon_label.config(image=img)
-            self.icon_photo = img
+            # Restore icon
+            icon_name = self.state.get("icon", "Moon.png")
+            icon_path = resource_path(f"assets/{icon_name}")
+            if os.path.exists(icon_path):
+                img = ImageTk.PhotoImage(resize_by_height(Image.open(icon_path), 18))
+                self.icon_label.config(image=img)
+                self.icon_photo = img
 
-        if self.num > 1:
-            icon2 = self.state.get("icon2", "Moon.png")
-            path2 = resource_path(f"assets/{icon2}")
-            if os.path.exists(path2):
-                img2 = ImageTk.PhotoImage(resize_by_height(Image.open(path2), 18))
-                self.icon_label2.config(image=img2)
-                self.icon_photo2 = img2
+            if self.num > 1:
+                icon2 = self.state.get("icon2", "Moon.png")
+                path2 = resource_path(f"assets/{icon2}")
+                if os.path.exists(path2):
+                    img2 = ImageTk.PhotoImage(resize_by_height(Image.open(path2), 18))
+                    self.icon_label2.config(image=img2)
+                    self.icon_photo2 = img2
     
     def toggle(self, _):
         self.state["collapsed"] = not self.state["collapsed"]
@@ -663,15 +668,15 @@ class LoadingZoneRow(tk.Frame):
         win.focus_force()
         win.bind("<FocusOut>", lambda e: win.destroy())
 
-        icons = ["Cascade.png", "Sand.png", "Lake.png", "Wooded.png", "Lost.png", "Metro.png", "Snow.png", "Seaside.png", "Luncheon.png", "Ruin.png", "Bowser.png", "Cap.png", "Dark.png", "Star.png"]
+        icons = ["Cascade.png", "Sand.png", "Lake.png", "Wooded.png", "Lost.png", "Metro.png", "Snow.png", "Seaside.png", "Luncheon.png", "Ruin.png", "Bowser.png", "Cap.png", "Dark.png", "Star.png", "Moon.png", "Moon_Dark.png", "checkmark.png", "xmark.png"]
         win.images = []  # prevent GC
 
         for idx, icon in enumerate(icons):
             img = ImageTk.PhotoImage(resize_by_height(Image.open(resource_path(f"assets/{icon}")),20))
 
             lbl = tk.Label(win, image=img, bg="#222222", cursor="hand2")
-            row = idx // 7
-            col = idx % 7
+            row = idx // 6
+            col = idx % 6
             lbl.grid(row=row, column=col, padx=4, pady=4)
 
             win.images.append(img)
@@ -756,15 +761,15 @@ class TrackerApp(tk.Tk):
                     "Icy Cave": {"num": 1},
                     "Moe-eye": {"num": 2},
                     "Shop": {"num": 1},
-                    "Employees": {"num": 1},
+                    "Employees": {"num": 1}, #Shop crouch zone
                     "Slots": {"num": 1},
                     "Rumble": {"num": 1},
-                    "Costume": {"num": 1},
+                    "Outfit": {"num": 1},
                     "Jaxi Ruins": {"num": 2},
                     "Bullet Bill": {"num": 2},
                     "Gushen": {"num": 2},
                     "Sphynx": {"num": 1},
-                    "Poison": {"num": 2},
+                    "Moving Platform": {"num": 2},
                     "Rocket": {"num": 2},
                     "Colossal Ruins": {"num": 2},
                 }
@@ -773,7 +778,7 @@ class TrackerApp(tk.Tk):
                 "color": "#e46cab",
                 "icon": resource_path("assets/Lake.png"),
                 "zones": {
-                    "Frog": {"num": 2},
+                    "Poison Waves": {"num": 2},
                     "Zipper": {"num": 2},
                     "Grab Climb": {"num": 2},
                     "Shop": {"num": 1},
@@ -784,16 +789,20 @@ class TrackerApp(tk.Tk):
                 "color": "#1e65e7",
                 "icon": resource_path("assets/Wooded.png"),
                 "zones": {
+                    "DW Odyssey": {"num": 0},
+                    "DW Red Maze": {"num": 0},
+                    "DW Pond": {"num": 0},
+                    "DW Treasure": {"num": 1},
+                    "DW Outfit": {"num": 1},
                     "Rocket": {"num": 2},
                     "Sheep": {"num": 2},
-                    "Elevator": {"num": 2},
-                    "Poison": {"num": 2},
-                    "Clouds": {"num": 2},
+                    "Tank": {"num": 2},
+                    "Vine Clouds": {"num": 2},
                     "Breakdown": {"num": 2},
                     "Invisible": {"num": 2},
-                    "Costume": {"num": 2},
                     "Flooded Pipes": {"num": 2},
                     "Flower Road": {"num": 2},
+                    "Treasure Room": {"num": 1},
                 }
             },
             "Lost": {
@@ -813,18 +822,18 @@ class TrackerApp(tk.Tk):
                     "Purple Shop": {"num": 1},
                     "Dino": {"num": 2},
                     "Bullet Billding": {"num": 2},
-                    "Shards": {"num": 2},
+                    "Taxi": {"num": 2},
                     "Notes": {"num": 1},
                     "2D": {"num": 2},
                     "Slots": {"num": 1},
                     "People": {"num": 2},
-                    "Costume": {"num": 2},
+                    "Outfit": {"num": 2},
                     "Rocket": {"num": 2},
                     "Dark": {"num": 2},
                     "Scaffolding": {"num": 2},
                     "Scooter": {"num": 2},
                     "Rotating Maze": {"num": 2},
-                    "RC Car": {"num": 1},
+                    "RC Car": {"num": 2},
                 }
             },
             "Snow": {
@@ -836,11 +845,10 @@ class TrackerApp(tk.Tk):
                     "Rocket Flower": {"num": 2},
                     "Iceburn": {"num": 2},
                     "Flower Road": {"num": 2},
-                    "Tracewalking": {"num": 2},
-                    "Clouds": {"num": 2},
-                    "Costume": {"num": 2},
-                    "Shop": {"num": 1},
                     "Tracewalking": {"num": 1},
+                    "Clouds": {"num": 2},
+                    "Outfit": {"num": 2},
+                    "Shop": {"num": 1},
                 }
             },
             "Seaside": {
@@ -851,7 +859,7 @@ class TrackerApp(tk.Tk):
                     "Well Exit": {"num": 1},
                     "Rumble": {"num": 1},
                     "Rocket": {"num": 2},
-                    "Costume": {"num": 1},
+                    "Outfit": {"num": 1},
                     "Gushen": {"num": 2},
                     "Sphynx": {"num": 1},
                     "Pokio": {"num": 2},
@@ -870,7 +878,7 @@ class TrackerApp(tk.Tk):
                     "Veggie Room": {"num": 1},
                     "Slots": {"num": 1},
                     "Shop": {"num": 1},
-                    "Costume": {"num": 1},
+                    "Outfit": {"num": 2},
                     "Spinning Athletics": {"num": 2},
                     "Lava Islands": {"num": 2},
                     "Volcano Cave": {"num": 2},
@@ -892,10 +900,10 @@ class TrackerApp(tk.Tk):
                 "zones": {
                     "Jizo": {"num": 2},
                     "Shop": {"num": 1},
-                    "Costume": {"num": 2},
+                    "Outfit": {"num": 2},
                     "Treasure Room": {"num": 1},
                     "Spinning Tower": {"num": 2},
-                    "Clouds": {"num": 2},
+                    "Vine Clouds": {"num": 2},
                     "Hexagon Tower": {"num": 2},
                     "Wooden Tower": {"num": 2},
                 }
@@ -904,7 +912,9 @@ class TrackerApp(tk.Tk):
                 "color": "#fff672",
                 "icon": resource_path("assets/Star.png"),
                 "zones": {
-                    "Costume": {"num": 2},
+                    "Shop": {"num": 1},
+                    "Castle Door": {"num": 2},
+                    "Outfit": {"num": 2},
                     "Cloud Sea": {"num": 2},
                     "Well": {"num": 2},
                     "Knucklotec": {"num": 1},
@@ -932,7 +942,7 @@ class TrackerApp(tk.Tk):
                 "color": "#fff2c6",
                 "icon": resource_path("assets/Dark.png"),
                 "zones": {
-                    "End": {"num": 1},
+                    "Pipe": {"num": 1},
                 }
             },
         }
