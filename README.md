@@ -3,7 +3,7 @@
 A live tracker + OBS overlay for Super Mario Odyssey Randomizer speedruns.
 
 > [!TIP]
-> If you do not have Python installed or you just want to run the tracker easily, there is a EXE file made through [PyInstaller](https://pyinstaller.org/en/stable/operating-mode.html) that has all the dependencies wrapped in. Double clicking the file will run the program with no issues.
+> **If you do not have Python installed, there is an application in the repository titled "tracker." Double-click to run the tracker without installing any extras. You can skip to the "Getting Started" section for basic information on how to use the tracker!**
 
 ## Requirements for Running through Python
 - Python 3.11+  
