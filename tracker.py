@@ -401,6 +401,8 @@ class OBSWindow(tk.Toplevel):
         self.bg_color = BG_COLOR
         self.config(bg=self.bg_color)
 
+        self.moon_rows = moon_rows
+
         self.main = tk.Frame(self, bg=self.bg_color)
         self.main.pack(fill="both", expand=True)
 
@@ -427,8 +429,23 @@ class OBSWindow(tk.Toplevel):
         self.ability_col.pack(pady=(0, 20))
 
         self.bowser_row = OBSBowserRow(self.right, capture_row, self.bg_color)
-        self.bowser_row.pack()
+        self.bowser_row.pack(pady=(0, 20))
 
+        self.moon_total_header = SectionHeader(self.right, "Moons:")
+        self.moon_total_label = tk.Label(
+            self.right,
+            text="0 / 124",
+            fg=TEXT_COLOR,
+            bg=self.bg_color,
+            font=FONT_BIG
+        )
+        self.moon_total_label.pack(pady=(0,10))
+        self.update_moon_total()
+
+    def update_moon_total(self):
+        total = sum(row.count for row in self.moon_rows)
+        self.moon_total_label.config(text=f"{total} / 124")
+        self.after(200, self.update_moon_total)
 
     def toggle_bg(self):
         if self.bg_mode == "dark":
@@ -450,6 +467,8 @@ class OBSWindow(tk.Toplevel):
         self.right.config(bg=self.bg_color)
         self.moon_cave_header.set_bg(self.bg_color)
         self.cave_skip_header.set_bg(self.bg_color)
+        self.moon_total_header.set_bg(self.bg_color)
+        self.moon_total_label.config(bg=self.bg_color)
 
 # -------------------------
 # Loading Zone Window
