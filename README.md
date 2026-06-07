@@ -11,7 +11,7 @@ Download from: https://www.python.org/downloads/
 ✔ Make sure "Add Python to PATH" is checked
 
 ## Installation through Python
-1. In the directory of your choosing run: `git clone https://github.com/FireRisingRaging/SMO_Randomizer_Tracker.git`
+1. In the directory of your choosing run: `git clone https://github.com/BaconFearMC/SMO_Randomizer_Tracker.git`
 2. Install dependencies in the project folder: `pip install -r requirements.txt`
 3. Run the tracker: `python tracker.py`
 
@@ -36,4 +36,4 @@ After you've opened the tracker, getting started is very easy!
 - Pressing the "Clear" button will reset the tracker
 - Hit the "Notes" button to open another window that allows you to freely track sub-area loads and chains (you can also track the moons of each sub-area here too!)
 
-<sub>Made by FireRisingRaging and Just Bag assisted by GMO7</sub>
+<sub>Made by <img width="766" height="706" alt="image" src="https://github.com/user-attachments/assets/41b77881-2be3-420d-9340-2adaf475ad68" />singRaging and Just Bag assisted by GMO7</sub>
