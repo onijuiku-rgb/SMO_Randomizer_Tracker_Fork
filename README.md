@@ -36,4 +36,7 @@ After you've opened the tracker, getting started is very easy!
 - Pressing the "Clear" button will reset the tracker
 - Hit the "Notes" button to open another window that allows you to freely track sub-area loads and chains (you can also track the moons of each sub-area here too!)
 
-<sub>Made by <img width="766" height="706" alt="image" src="https://github.com/user-attachments/assets/41b77881-2be3-420d-9340-2adaf475ad68" />singRaging and Just Bag assisted by GMO7</sub>
+Made by FireRisingRaging and Just Bag assisted by GMO7
+Forked by BaconFearMC and made Native on Linux by @okie8260 on Discord
+
+<sub>Made by <img width="766" height="706" alt="image" src="https://github.com/user-attachments/assets/41b77881-2be3-420d-9340-2adaf475ad68" /></sub>
