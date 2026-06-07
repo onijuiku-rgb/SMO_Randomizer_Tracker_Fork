@@ -1,4 +1,5 @@
 ## How to compile yourself on Linux using bash
+## this assumes you already have all your python dependencies installed
 
 1. Install Tkinter via your package manager:
 ## Arch
